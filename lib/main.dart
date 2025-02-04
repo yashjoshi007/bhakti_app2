@@ -1,5 +1,5 @@
+import 'package:bhakti_app/common/list_config.dart';
 import 'package:bhakti_app/config.dart';
-import 'package:bhakti_app/screens/home_screen/drawer_screen/layouts/support_us_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'common/languages/app_localizations.dart';
@@ -14,14 +14,16 @@ void main() async {
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   String? jsonString = prefs.getString('bookList');
-
+  
   if (jsonString != null) {
     List<dynamic> jsonData = jsonDecode(jsonString);
+    
     appArray.localBookList =
         jsonData.map((e) => Map<String, dynamic>.from(e)).toList();
   }
   await Firebase.initializeApp();
   runApp(MyApp(prefs: prefs));
+  
   FlutterNativeSplash.remove();
 }
 
@@ -33,15 +35,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // return
-    // const MaterialApp(
-    //   home: SupportUsScreen(),
-    // );
-
     return FutureBuilder(
         future: SharedPreferences.getInstance(),
         builder: (context1, AsyncSnapshot<SharedPreferences> snapData) {
           if (snapData.hasData) {
+            RemoteConfigFetcher.fetchConfigValues();
+            print(appArray.homePageSectionList);
             return MultiProvider(
                 providers: [
                   ChangeNotifierProvider(create: (_) => LoadingProvider()),
