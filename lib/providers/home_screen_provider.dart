@@ -1,5 +1,6 @@
 import 'dart:developer' as developer;
 import 'dart:math' as math;
+import 'package:bhakti_app/screens/home_screen/drawer_screen/layouts/support_us_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 import 'package:bhakti_app/config.dart';
@@ -387,6 +388,11 @@ class HomeScreenProvider extends ChangeNotifier {
         language(context, appFonts.contactUs)) {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const ContactUsScreen()));
+      homeScreenKey.currentState!.closeDrawer();
+    } else if (language(context, value['name']) ==
+        language(context, appFonts.supportUs)) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => SupportUsScreen()));
       homeScreenKey.currentState!.closeDrawer();
     }
 

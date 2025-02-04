@@ -129,6 +129,7 @@
   "addUser": "Add User",
   "notification": "Notification",
   "contactUs": "Contact Us",
+  "supportUs": "Support Us",
   "areYouSureToStop": "Are You Sure You Want to stop shared",
   "stopSharing": "Stop Sharing",
   "notificationSetting": "Notification Setting",
@@ -271,5 +272,5 @@
   "otherActivities": "Other Activities",
   "chantingQualityRating": "Chanting Quality Rating",
   "noDocumentsAvailable": "No documents available.",
-  "documentDeletedSuccessfully" : "Document deleted successfully"
+  "documentDeletedSuccessfully": "Document deleted successfully"
 }

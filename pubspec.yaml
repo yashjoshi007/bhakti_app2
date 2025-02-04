@@ -83,8 +83,8 @@ dependencies:
   shimmer: ^3.0.0
   flutter_native_splash: ^2.3.8
   dropdown_search: ^5.0.6
-
-
+  flutter_pay_upi: ^0.2.1
+  flutter_paypal_payment: ^1.0.0
 
 
 dev_dependencies:
@@ -117,6 +117,10 @@ flutter:
     - assets/json/hi.json  # JSON file containing Hindi translations
     - assets/json/ru.json  # JSON file containing Russian translations
     - assets/images/SadhanaLogo.png
+
+  plugin:
+    androidPackage: com.example.flutterpayupi
+    iosPrefix: FLT
 
   #   - images/a_dot_ham.jpeg
 

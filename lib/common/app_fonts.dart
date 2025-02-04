@@ -128,6 +128,7 @@ class AppFonts {
   final addUser = "addUser";
   final notification = "notification";
   final contactUs = "contactUs";
+  final supportUs = "Support Us";
   final areYouSureToStop = "areYouSureToStop";
   final stopSharing = "stopSharing";
   final notificationSetting = "notificationSetting";

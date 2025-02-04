@@ -147,6 +147,8 @@ PODS:
     - Flutter
   - flutter_native_splash (0.0.1):
     - Flutter
+  - flutter_pay_upi (0.0.1):
+    - Flutter
   - flutter_pdfview (1.0.2):
     - Flutter
   - flutter_secure_storage (6.0.0):
@@ -249,6 +251,7 @@ DEPENDENCIES:
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_localization (from `.symlinks/plugins/flutter_localization/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
+  - flutter_pay_upi (from `.symlinks/plugins/flutter_pay_upi/ios`)
   - flutter_pdfview (from `.symlinks/plugins/flutter_pdfview/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
@@ -326,6 +329,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_localization/ios"
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
+  flutter_pay_upi:
+    :path: ".symlinks/plugins/flutter_pay_upi/ios"
   flutter_pdfview:
     :path: ".symlinks/plugins/flutter_pdfview/ios"
   flutter_secure_storage:
@@ -390,6 +395,7 @@ SPEC CHECKSUMS:
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   flutter_localization: f43b18844a2b3d2c71fd64f04ffd6b1e64dd54d4
   flutter_native_splash: edf599c81f74d093a4daf8e17bd7a018854bc778
+  flutter_pay_upi: eb7f565368efef5f824d9b6982d716bfec955ea5
   flutter_pdfview: 25f53dd6097661e6395b17de506e6060585946bd
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
   fluttertoast: e9a18c7be5413da53898f660530c56f35edfba9c

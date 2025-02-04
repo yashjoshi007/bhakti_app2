@@ -178,6 +178,11 @@ class AppArray {
       'fillIcon': eSvgAssets.callCalling1,
       "name": appFonts.contactUs
     },
+    {
+      "icon": eSvgAssets.callCalling,
+      'fillIcon': eSvgAssets.callCalling1,
+      "name": appFonts.supportUs
+    },
   ];
 
   var bottomNavyList = [

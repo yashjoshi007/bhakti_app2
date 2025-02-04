@@ -92,6 +92,50 @@ class LoginAuthProvider extends ChangeNotifier {
     }
   }
 
+  // signInWithGoogle(context) async {
+  //   // Get the Google sign-in account object
+  //   final GoogleSignInAccount? googleSignInAccount =
+  //       await GoogleSignIn().signIn();
+
+  //   if (googleSignInAccount != null) {
+  //     // Get the Google Sign-In authentication object
+  //     final GoogleSignInAuthentication googleAuth =
+  //         await googleSignInAccount.authentication;
+
+  //     // Create a Firebase credential using the Google Sign-In authentication object
+  //     final AuthCredential credential = GoogleAuthProvider.credential(
+  //       idToken: googleAuth.idToken,
+  //       accessToken: googleAuth.accessToken,
+  //     );
+
+  //     // Sign in to Firebase with the credential
+  //     final UserCredential userCredential =
+  //         await FirebaseAuth.instance.signInWithCredential(credential);
+
+  //     // Get the user details
+  //     final user = userCredential.user;
+
+  //     SharedPreferences? preferences;
+
+  //     preferences = await SharedPreferences.getInstance();
+  //     UserModel? userModel;
+  //     await Future.delayed(DurationsClass.s2);
+  //     userModel = UserModel.fromJson(json.decode(user.toString()));
+  //     debugPrint("userModel ${userModel.name}");
+  //     if (userModel.name == null) {
+  //       Navigator.pushReplacement(context,
+  //           MaterialPageRoute(builder: (context) {
+  //         return const SetUpProfile();
+  //       }));
+  //     } else {
+  //       Navigator.pushReplacement(context,
+  //           MaterialPageRoute(builder: (context) {
+  //         return const CommonBottomNavigationBar();
+  //       }));
+  //     }
+  //   }
+  // }
+
   // Function to navigate to phone login screen
   loginPhoneNavigator(context) {
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
