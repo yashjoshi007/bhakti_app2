@@ -109,4 +109,5 @@ class SvgAssets {
   final right = 'assets/svg/right.svg';
   final wrong = 'assets/svg/wrong.svg';
   final infoIcon = 'assets/svg/infoIcon.svg';
+  final moneybag = 'assets/svg/money-bag-svgrepo-com.svg';
 }

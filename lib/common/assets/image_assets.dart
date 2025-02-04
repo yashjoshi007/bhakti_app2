@@ -7,5 +7,5 @@ class ImageAssets {
   final avatarImg1 = "assets/images/avatarImg.png";
   final bhaktiLogo = "assets/images/bhakti_logo.png";
   final userSection = "assets/images/userSection.png";
-  final sadhanaLogo = "assets/images/SadhanaLogo.png";
+  final sadhanaLogo = "assets/images/SadhanaLogo2.jpg";
 }

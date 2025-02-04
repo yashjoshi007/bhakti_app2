@@ -124,6 +124,7 @@ class AppFonts {
   final thisAction = "thisAction";
   final areYouSure = "areYouSure";
   final deleteUser = "deleteUser";
+  final hideUser = "hideUser";
   final sharingWithMe = "sharingWithMe";
   final addUser = "addUser";
   final notification = "notification";
@@ -144,6 +145,7 @@ class AppFonts {
   final mediumBooks = "mediumBooks";
   final save = "save";
   final submit = "submit";
+  final donate = "Donate";
   final largeBooks = "largeBooks";
   final userSection = "userSection";
   final userView = "userView";

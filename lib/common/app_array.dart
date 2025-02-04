@@ -1,3 +1,4 @@
+import 'package:bhakti_app/common/list_config.dart';
 import 'package:bhakti_app/config.dart';
 
 class AppArray {
@@ -53,30 +54,31 @@ class AppArray {
   ];
 
   List<Map<String, dynamic>> homePageSectionList = [
-    {'svgImage': eSvgAssets.dragIcon, 'name': appFonts.sleep, 'isOn': true},
-    {'svgImage': eSvgAssets.dragIcon, 'name': appFonts.worship, 'isOn': true},
-    {'svgImage': eSvgAssets.dragIcon, 'name': appFonts.chanting, 'isOn': true},
-    {
+    {'svgImage': eSvgAssets.dragIcon, 'name': appFonts.sleep, 'isOn': RemoteConfigFetcher.sleep},
+    {'svgImage': eSvgAssets.dragIcon, 'name': appFonts.worship, 'isOn': RemoteConfigFetcher.worship},
+    {'svgImage': eSvgAssets.dragIcon, 'name': appFonts.chanting, 'isOn': RemoteConfigFetcher.chanting},
+    { 
+      
       'svgImage': eSvgAssets.dragIcon,
       'name': appFonts.regulations,
-      'isOn': true
+      'isOn': RemoteConfigFetcher.regulations
     },
     {
       'svgImage': eSvgAssets.dragIcon,
       'name': appFonts.association,
-      'isOn': true
+      'isOn': RemoteConfigFetcher.association
     },
     {
       'svgImage': eSvgAssets.dragIcon,
       'name': appFonts.bookReading,
-      'isOn': true
+      'isOn': RemoteConfigFetcher.bookReading
     },
     {
       'svgImage': eSvgAssets.dragIcon,
       'name': appFonts.bookDistribution,
-      'isOn': true
+      'isOn': RemoteConfigFetcher.bookDistribution
     },
-    {'svgImage': eSvgAssets.dragIcon, 'name': appFonts.notes, 'isOn': true}
+    {'svgImage': eSvgAssets.dragIcon, 'name': appFonts.notes, 'isOn':RemoteConfigFetcher.notes}
   ];
 
   List<Map<String, dynamic>> notificationSettingList = [
@@ -179,8 +181,8 @@ class AppArray {
       "name": appFonts.contactUs
     },
     {
-      "icon": eSvgAssets.callCalling,
-      'fillIcon': eSvgAssets.callCalling1,
+      "icon": eSvgAssets.moneybag,
+      'fillIcon': eSvgAssets.moneybag,
       "name": appFonts.supportUs
     },
   ];
