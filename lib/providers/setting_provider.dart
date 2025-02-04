@@ -468,4 +468,37 @@ class SettingProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  List<dynamic> hiddenUsers = [];
+
+  Future<void> _loadHiddenUsers() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? hiddenListString = prefs.getString('hidden_user_list');
+    if (hiddenListString != null) {
+      hiddenUsers = jsonDecode(hiddenListString);
+    }
+  }
+
+  Future<void> _removeHiddenUser(int index) async {
+    final prefs = await SharedPreferences.getInstance();
+    hiddenUsers.removeAt(index);
+    await prefs.setString('hidden_user_list', jsonEncode(hiddenUsers));
+  }
+
+  Future<void> _addToHiddenUserList(Map<String, dynamic> user) async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? existingList = prefs.getString('hidden_user_list');
+    List<dynamic> hiddenUsers =
+    existingList != null ? jsonDecode(existingList) : [];
+
+    if (!hiddenUsers.any((u) => u['display_name'] == user['display_name'])) {
+      hiddenUsers.add({
+        'uid' : user['uid'],
+        'display_name': user['display_name'],
+        'display_picture': user['display_picture'],
+      });
+      await prefs.setString('hidden_user_list', jsonEncode(hiddenUsers));
+    }
+  }
+
 }

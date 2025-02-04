@@ -47,7 +47,7 @@ class SetUpProfileProvider extends ChangeNotifier {
   String? selectedItems;
   List<String> masterItems = [];
 
-  final setupFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> setupFormKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> setupScaffoldKey = GlobalKey<ScaffoldState>();
   List countryItems = [];
   dynamic countrySelected;
@@ -218,100 +218,97 @@ class SetUpProfileProvider extends ChangeNotifier {
 
   Future<void> saveData(context) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    if (setupFormKey.currentState!.validate()) {
-      if (setupFormKey.currentState?.validate() ?? false) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('name', name.text);
+    if (setupFormKey.currentState?.validate() ?? false) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('name', name.text);
 
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-              builder: (context) => const CommonBottomNavigationBar()),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Please complete all required fields')));
-      }
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+            builder: (context) => const CommonBottomNavigationBar()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please complete all required fields')));
+    }
 
-      showLoading(context);
-      notifyListeners();
-      try {
-        String newUrl = "";
-        if (image != null) {
-          log("asdasd asd asd");
-          String base64Image = await resizeAndEncodeImage(File(image!.path));
-          newUrl = base64Image;
-          Reference reference =
-              FirebaseStorage.instance.ref().child(image!.name);
-          var file = File(image!.path);
-          UploadTask uploadTask = reference.putFile(file);
-          await uploadTask.then((res) async {
-            await res.ref.getDownloadURL().then((images) async {
-              newUrl = images;
-              notifyListeners();
-            }, onError: (err) {
-              log(" error error $err");
-            });
-          });
-        }
-        Map<String, dynamic> body = {
-          "name": name.text,
-          "date_of_birth": dob.text,
-          "gender": selectedGender != null
-              ? selectedGender == 1
-                  ? "male"
-                  : "female"
-              : "",
-          "email": emailId.text,
-          "mobile_number":
-              phoneNum.text.isNotEmpty ? "$countryCode-${phoneNum.text}" : "",
-          "country": countrySelected['code'],
-          "state": state.text,
-          "city": city.text,
-          "yatra_name": yatraName.text,
-          "initiated": value,
-          "initiated_name": initiatedName.text,
-          "spiritual_master": masterItems[0],
-          "intitiation_date": initiatedDate.text,
-          "marital_status": selectedMarital != null
-              ? selectedMarital == 1
-                  ? "married"
-                  : "unmarried"
-              : "",
-          "profile_picture_url": newUrl == "" ? downloadUrl : newUrl
-        };
-
-        log("message $body");
-        await apiServices
-            .postApi(context, api.profileUpdate, body, isToken: true)
-            .then((value) async {
-          hideLoading(context);
-          notifyListeners();
-          if (value.isSuccess!) {
-            pref.setString(session.user,
-                json.encode(UserModel.fromJson(value.data['data'])));
-            userModel = UserModel.fromJson(value.data['data']);
+    showLoading(context);
+    notifyListeners();
+    try {
+      String newUrl = "";
+      if (image != null) {
+        log("asdasd asd asd");
+        String base64Image = await resizeAndEncodeImage(File(image!.path));
+        newUrl = base64Image;
+        Reference reference = FirebaseStorage.instance.ref().child(image!.name);
+        var file = File(image!.path);
+        UploadTask uploadTask = reference.putFile(file);
+        await uploadTask.then((res) async {
+          await res.ref.getDownloadURL().then((images) async {
+            newUrl = images;
             notifyListeners();
-            final commonApi =
-                Provider.of<CommonApiProvider>(context, listen: false);
-
-            await commonApi.selfApi(context);
-
-            newUrl = "";
-            image = null;
-            Navigator.pushNamedAndRemoveUntil(
-                context, routeName.commonBottomNavigationBar, (route) => false);
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(value.message,
-                    style: appCss.dmDenseMedium14
-                        .textColor(appColor(context).appTheme.black))));
-          }
+          }, onError: (err) {
+            log(" error error $err");
+          });
         });
-      } catch (e) {
-        log("error error eeeeee $e");
+      }
+      Map<String, dynamic> body = {
+        "name": name.text,
+        "date_of_birth": dob.text,
+        "gender": selectedGender != null
+            ? selectedGender == 1
+                ? "male"
+                : "female"
+            : "",
+        "email": emailId.text,
+        "mobile_number":
+            phoneNum.text.isNotEmpty ? "$countryCode-${phoneNum.text}" : "",
+        "country": countrySelected['code'],
+        "state": state.text,
+        "city": city.text,
+        "yatra_name": yatraName.text,
+        "initiated": value,
+        "initiated_name": initiatedName.text,
+        "spiritual_master": masterItems[0],
+        "intitiation_date": initiatedDate.text,
+        "marital_status": selectedMarital != null
+            ? selectedMarital == 1
+                ? "married"
+                : "unmarried"
+            : "",
+        "profile_picture_url": newUrl == "" ? downloadUrl : newUrl
+      };
+
+      log("message $body");
+      await apiServices
+          .postApi(context, api.profileUpdate, body, isToken: true)
+          .then((value) async {
         hideLoading(context);
         notifyListeners();
-      }
+        if (value.isSuccess!) {
+          pref.setString(session.user,
+              json.encode(UserModel.fromJson(value.data['data'])));
+          userModel = UserModel.fromJson(value.data['data']);
+          notifyListeners();
+          final commonApi =
+              Provider.of<CommonApiProvider>(context, listen: false);
+
+          await commonApi.selfApi(context);
+
+          newUrl = "";
+          image = null;
+          Navigator.pushNamedAndRemoveUntil(
+              context, routeName.commonBottomNavigationBar, (route) => false);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(value.message,
+                  style: appCss.dmDenseMedium14
+                      .textColor(appColor(context).appTheme.black))));
+        }
+      });
+    } catch (e) {
+      log("error error eeeeee $e");
+      hideLoading(context);
+      notifyListeners();
     }
   }
 

@@ -51,90 +51,117 @@ class LoginAuthProvider extends ChangeNotifier {
     return buttonsWithSpace;
   }
 
-  // Function to sign in with Google
-  signInWithGoogle(context) async {
-    // Trigger the authentication flow
-
-    SharedPreferences? preferences;
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
-
-    User? user = (await auth.signInWithCredential(credential)).user;
-    notifyListeners();
-    userNameGoogle = user!.email!;
-
-    String? token = await user.getIdToken();
-
-    final commonApi = Provider.of<CommonApiProvider>(context, listen: false);
-
-    await commonApi.socialLogin(context, token);
-
-    preferences = await SharedPreferences.getInstance();
-    UserModel? userModel;
-    await Future.delayed(DurationsClass.s2);
-    userModel =
-        UserModel.fromJson(json.decode(preferences.getString(session.user)!));
-    debugPrint("userModel ${userModel.name}");
-    if (userModel.name == null) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return const SetUpProfile();
-      }));
-    } else {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return const CommonBottomNavigationBar();
-      }));
-    }
-  }
-
+  // Function to sign in with Google (original)
   // signInWithGoogle(context) async {
-  //   // Get the Google sign-in account object
-  //   final GoogleSignInAccount? googleSignInAccount =
-  //       await GoogleSignIn().signIn();
+  //   // Trigger the authentication flow
 
-  //   if (googleSignInAccount != null) {
-  //     // Get the Google Sign-In authentication object
-  //     final GoogleSignInAuthentication googleAuth =
-  //         await googleSignInAccount.authentication;
+  //   SharedPreferences? preferences;
+  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-  //     // Create a Firebase credential using the Google Sign-In authentication object
-  //     final AuthCredential credential = GoogleAuthProvider.credential(
-  //       idToken: googleAuth.idToken,
-  //       accessToken: googleAuth.accessToken,
-  //     );
+  //   // Obtain the auth details from the request
+  //   final GoogleSignInAuthentication? googleAuth =
+  //       await googleUser?.authentication;
+  //   // Create a new credential
+  //   final credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
 
-  //     // Sign in to Firebase with the credential
-  //     final UserCredential userCredential =
-  //         await FirebaseAuth.instance.signInWithCredential(credential);
+  //   User? user = (await auth.signInWithCredential(credential)).user;
+  //   notifyListeners();
+  //   userNameGoogle = user!.email!;
 
-  //     // Get the user details
-  //     final user = userCredential.user;
+  //   String? token = await user.getIdToken();
 
-  //     SharedPreferences? preferences;
+  //   final commonApi = Provider.of<CommonApiProvider>(context, listen: false);
 
-  //     preferences = await SharedPreferences.getInstance();
-  //     UserModel? userModel;
-  //     await Future.delayed(DurationsClass.s2);
-  //     userModel = UserModel.fromJson(json.decode(user.toString()));
-  //     debugPrint("userModel ${userModel.name}");
-  //     if (userModel.name == null) {
-  //       Navigator.pushReplacement(context,
-  //           MaterialPageRoute(builder: (context) {
-  //         return const SetUpProfile();
-  //       }));
-  //     } else {
-  //       Navigator.pushReplacement(context,
-  //           MaterialPageRoute(builder: (context) {
-  //         return const CommonBottomNavigationBar();
-  //       }));
-  //     }
+  //   await commonApi.socialLogin(context, token);
+
+  //   preferences = await SharedPreferences.getInstance();
+  //   UserModel? userModel;
+  //   await Future.delayed(DurationsClass.s2);
+  //   userModel =
+  //       UserModel.fromJson(json.decode(preferences.getString(session.user)!));
+  //   debugPrint("userModel ${userModel.name}");
+  //   if (userModel.name == null) {
+  //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+  //       return const SetUpProfile();
+  //     }));
+  //   } else {
+  //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+  //       return const CommonBottomNavigationBar();
+  //     }));
   //   }
   // }
+
+  signInWithGoogle(context) async {
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      if (googleUser == null) {
+        // User canceled the sign-in process
+        return;
+      }
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+
+      // Sign in with the credential
+      User? user = (await auth.signInWithCredential(credential)).user;
+
+      if (user == null) {
+        // Sign-in failed
+        return;
+      }
+
+      notifyListeners();
+      userNameGoogle = user.email!;
+
+      String? token = await user.getIdToken();
+
+      final commonApi = Provider.of<CommonApiProvider>(context, listen: false);
+
+      await commonApi.socialLogin(context, token);
+
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      UserModel? userModel;
+      await Future.delayed(DurationsClass.s2);
+
+      // Check if user data exists in shared preferences
+      String? userJson = preferences.getString(session.user);
+      if (userJson == null) {
+        // First time sign-in, navigate to profile setup
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return const SetUpProfile();
+        }));
+      } else {
+        // User data exists, parse it
+        userModel = UserModel.fromJson(json.decode(userJson));
+        debugPrint("userModel ${userModel.name}");
+        if (userModel.name == null) {
+          // User data is incomplete, navigate to profile setup
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return const SetUpProfile();
+          }));
+        } else {
+          // User data is complete, navigate to main screen
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return const CommonBottomNavigationBar();
+          }));
+        }
+      }
+    } catch (e) {
+      // Handle errors
+      debugPrint("Error during Google sign-in: $e");
+    }
+  }
 
   // Function to navigate to phone login screen
   loginPhoneNavigator(context) {

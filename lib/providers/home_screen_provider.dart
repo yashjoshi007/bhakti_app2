@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:bhakti_app/screens/home_screen/drawer_screen/layouts/pdf_view_screen.dart';
 
 import '../screens/home_screen/drawer_screen/layouts/my_doc_layout/doc_widget_layout.dart';
+import '../screens/home_screen/drawer_screen/layouts/support_us_screen copy.dart';
 
 class HomeScreenProvider extends ChangeNotifier {
   Color containerBorderColor = Colors.white;
@@ -99,7 +100,7 @@ class HomeScreenProvider extends ChangeNotifier {
   final colors = [Colors.amber[400], Colors.yellow[400]];
   final stops = [0.0, 0.9];
   ScrollController scrollController = ScrollController();
-  final GlobalKey<ScaffoldState> homeScreenKey = GlobalKey();
+  final GlobalKey<ScaffoldState> homeScreenKey = GlobalKey<ScaffoldState>();
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemScrollController itemScrollController1 = ItemScrollController();
   TextEditingController searchHere = TextEditingController();
@@ -389,10 +390,11 @@ class HomeScreenProvider extends ChangeNotifier {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const ContactUsScreen()));
       homeScreenKey.currentState!.closeDrawer();
-    } else if (language(context, value['name']) ==
+    } 
+    else if (language(context, value['name']) ==
         language(context, appFonts.supportUs)) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => SupportUsScreen()));
+          context, MaterialPageRoute(builder: (context) => TestScreen()));
       homeScreenKey.currentState!.closeDrawer();
     }
 
@@ -1066,6 +1068,9 @@ class HomeScreenProvider extends ChangeNotifier {
     int originalSandhyaHour = sandhyaArtiCurrentHour;
     int originalSandhyaMinute = sandhyaArtiCurrentMinute;
     if (sandhyaArtiTime.isEmpty) {
+      for (var item in appArray.sandhyaTypeList) {
+        item['isOn'] = false;
+      }
       setSleepTimeFromDefaults(); // if sandhya Arti Time is empty then it will call the default time from the firebase remote config
     } else {
       int hour = int.parse(sandhyaArtiTime.split(":")[0]);
@@ -1105,6 +1110,9 @@ class HomeScreenProvider extends ChangeNotifier {
     int originalmanglaHour = manglaArtiCurrentHour;
     int originalmanglaMin = manglaArtiCurrentMinute;
     if (mangalaArtiTime.isEmpty) {
+      for (var item in appArray.manglaArtiTypeList) {
+        item['isOn'] = false;
+      }
       setSleepTimeFromDefaults(); // if mangala arti time is empty then it will call the default time from the firebase remote config
     } else {
       int hour = int.parse(mangalaArtiTime.split(":")[0]);
@@ -1485,11 +1493,10 @@ class HomeScreenProvider extends ChangeNotifier {
     }
   }
 
+  // TESTING CODE ------------------------------>
   List<dynamic> getCombinedData() {
     // Filter out local data that has the same 'book_id' as any API data item
     List<dynamic> filteredLocalData = appArray.localBookList.where((localItem) {
-      // Check if the local item is not present in the API data
-
       return !appArray.bookList.any((apiItem) {
         return apiItem['book_id'] == localItem['book_id'];
       });
@@ -1497,15 +1504,11 @@ class HomeScreenProvider extends ChangeNotifier {
 
     List<dynamic> filteredLocalData2 = checkAndReturnList();
 
-    // //developer.log(""message 11 ${filteredLocalData}");
-    // //developer.log(""message 12 ${bookRmtCnfgList}");
-
     filteredLocalData2.asMap().entries.forEach(
         (element) => print("SS : ${element.value['selected_chapters']}"));
 
     // Combine the filtered local data with the API data
     appArray.combineList = [...filteredLocalData, ...filteredLocalData2];
-    //developer.log(""ndwr : $filteredLocalData2.");
     appArray.combineList.sort((a, b) => a['book_id'].compareTo(b['book_id']));
     return appArray.combineList;
   }
@@ -1513,26 +1516,68 @@ class HomeScreenProvider extends ChangeNotifier {
   List<dynamic> checkAndReturnList() {
     List newList = [];
     for (var localItem in bookRmtCnfgList) {
-      // print("Local item = $localItem");
-      // print("API data = ${appArray.bookList}");
-
-      if (appArray.bookList
-          .where((apiItem) => apiItem['book_id'] == localItem['book_id'])
-          .isNotEmpty) {
-        // If a match is found, return the second list
-        int index = appArray.bookList.indexWhere(
-            (apiItem) => apiItem['book_id'] == localItem['book_id']);
-        if (index >= 0) {
-          localItem["selected_chapters"] =
-              appArray.bookList[index]['selected_chapters'];
-          localItem["reading_time"] = appArray.bookList[index]['reading_time'];
-          //developer.log(""localItem :${appArray.bookList[index]}");
-          newList.add(localItem);
-        }
+      int index = appArray.bookList
+          .indexWhere((apiItem) => apiItem['book_id'] == localItem['book_id']);
+      if (index >= 0) {
+        var newItem = Map<String, dynamic>.from(localItem);
+        newItem["selected_chapters"] =
+            appArray.bookList[index]['selected_chapters'];
+        newItem["reading_time"] = appArray.bookList[index]['reading_time'];
+        newList.add(newItem);
       }
     }
     return newList;
   }
+
+// ORIGINAL CODE ------------------------------>
+  // List<dynamic> getCombinedData() {
+  //   // Filter out local data that has the same 'book_id' as any API data item
+  //   List<dynamic> filteredLocalData = appArray.localBookList.where((localItem) {
+  //     // Check if the local item is not present in the API data
+
+  //     return !appArray.bookList.any((apiItem) {
+  //       return apiItem['book_id'] == localItem['book_id'];
+  //     });
+  //   }).toList();
+
+  //   List<dynamic> filteredLocalData2 = checkAndReturnList();
+
+  //   // //developer.log(""message 11 ${filteredLocalData}");
+  //   // //developer.log(""message 12 ${bookRmtCnfgList}");
+
+  //   filteredLocalData2.asMap().entries.forEach(
+  //       (element) => print("SS : ${element.value['selected_chapters']}"));
+
+  //   // Combine the filtered local data with the API data
+  //   appArray.combineList = [...filteredLocalData, ...filteredLocalData2];
+  //   //developer.log(""ndwr : $filteredLocalData2.");
+  //   appArray.combineList.sort((a, b) => a['book_id'].compareTo(b['book_id']));
+  //   return appArray.combineList;
+  // }
+
+  // List<dynamic> checkAndReturnList() {
+  //   List newList = [];
+  //   for (var localItem in bookRmtCnfgList) {
+  //     // print("Local item = $localItem");
+  //     // print("API data = ${appArray.bookList}");
+
+  //     if (appArray.bookList
+  //         .where((apiItem) => apiItem['book_id'] == localItem['book_id'])
+  //         .isNotEmpty) {
+  //       // If a match is found, return the second list
+  //       int index = appArray.bookList.indexWhere(
+  //           (apiItem) => apiItem['book_id'] == localItem['book_id']);
+  //       if (index >= 0) {
+  //         localItem["selected_chapters"] =
+  //             appArray.bookList[index]['selected_chapters'];
+  //         localItem["reading_time"] = appArray.bookList[index]['reading_time'];
+  //         //developer.log(""localItem :${appArray.bookList[index]}");
+  //         newList.add(localItem);
+  //       }
+  //     }
+  //   }
+  //   return newList;
+  // }
 
   // Retrieve data from the Get API for the specified date range
   getData(context, {isTap = false}) async {
@@ -1701,9 +1746,6 @@ class HomeScreenProvider extends ChangeNotifier {
                             "currentBookcurrentBook1 :${appArray.bookList[index]} || $currentBook");
                       }
                     }
-                    //developer.log(""bookRmtCnfgList $bookRmtCnfgList");
-                    //developer.log(""bookRmtCnfgList $chosenValue");
-                    //developer.log(""appArray.bookList ${appArray.bookList}");
                   }
 
                   var mangalaData = sadhnaData['data']['mangala_arti'];
@@ -2059,10 +2101,6 @@ class HomeScreenProvider extends ChangeNotifier {
               book['reading_time'] = null;
               book['selected_chapters'] = [];
             }
-            /////
-            print("inside else");
-            print(appArray.bookList);
-
             notifyListeners();
             sleepAt = "";
             wakeupTime = "";

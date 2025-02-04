@@ -6,7 +6,7 @@ class EmailLoginProvider extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
   bool isLoading = false, isValid = false, isHide = true;
   SharedPreferences? preferences;
-  final GlobalKey<ScaffoldState> emailScaffoldKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> emailScaffoldKey = GlobalKey<ScaffoldState>();
   bool value = false;
   String? passwordValid, emailValid;
   final emailFormKey = GlobalKey<FormState>();

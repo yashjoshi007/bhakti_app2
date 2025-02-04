@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:bhakti_app/config.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/widgets.dart' as wd;
 
 class MonitoringProvider extends ChangeNotifier {
   int isSelected = 0;
@@ -150,7 +151,7 @@ class MonitoringProvider extends ChangeNotifier {
       await remoteConfig.fetchAndActivate();
 
       String defaultProfilePictureUrl =
-          remoteConfig.getString('DefaultProfilePicture');
+      remoteConfig.getString('DefaultProfilePicture');
       profilePictureUrl = defaultProfilePictureUrl;
       return profilePictureUrl;
     } catch (e) {
@@ -163,26 +164,26 @@ class MonitoringProvider extends ChangeNotifier {
     return sleepDataList.map((data) {
       return DataRow(
           cells: sleepListApi.map((task) {
-        if (task == '') {
-          dynamic settingPvr =
+            if (task == '') {
+              dynamic settingPvr =
               Provider.of<SettingProvider>(context, listen: true);
-          int isSameUID = shareWithMeList.indexWhere((element) {
-            return element['uid'] == data['uid'];
-          });
+              int isSameUID = shareWithMeList.indexWhere((element) {
+                return element['uid'] == data['uid'];
+              });
 
-          return DataCell(onTap: () {
-            showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) {
-                  return CommonMonitoringDialog(
-                      data: settingPvr.shareWithMeList[isSameUID]);
-                });
-          }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
-        } else {
-          return DataCell(Center(child: Text(data[task] ?? "-")));
-        }
-      }).toList());
+              return DataCell(onTap: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return CommonMonitoringDialog(
+                          data: settingPvr.shareWithMeList[isSameUID]);
+                    });
+              }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
+            } else {
+              return DataCell(Center(child: Text(data[task] ?? "-")));
+            }
+          }).toList());
     }).toList();
   }
 
@@ -257,41 +258,41 @@ class MonitoringProvider extends ChangeNotifier {
     return allDataList.map((data) {
       return DataRow(
           cells: allInOneData.map((task) {
-        if (task == '') {
-          dynamic settingPvr =
+            if (task == '') {
+              dynamic settingPvr =
               Provider.of<SettingProvider>(context, listen: true);
-          int isSameUID = shareWithMeList.indexWhere((element) {
-            return element['uid'] == data['uid'];
-          });
+              int isSameUID = shareWithMeList.indexWhere((element) {
+                return element['uid'] == data['uid'];
+              });
 
-          return DataCell(onTap: () {
-            showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) {
-                  return CommonMonitoringDialog(
-                      data: settingPvr.shareWithMeList[isSameUID]);
-                });
-          }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
-        } else {
-          dynamic value = data[task];
-          if (value == null) {
-            return const DataCell(Center(child: Text("-")));
-          } else if (value.runtimeType == String) {
-            return DataCell(Center(child: Text(value)));
-          } else if (value == true || value == false) {
-            return DataCell(Center(
-              child: value == true
-                  ? SvgPicture.asset(eSvgAssets.right)
-                  : SvgPicture.asset(eSvgAssets.wrong),
-            ));
-          } else if (value is int) {
-            return DataCell(Center(child: Text(value.toString())));
-          } else {
-            return DataCell(Center(child: Text(data[task].toString())));
-          }
-        }
-      }).toList());
+              return DataCell(onTap: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return CommonMonitoringDialog(
+                          data:shareWithMeList[isSameUID]);
+                    });
+              }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
+            } else {
+              dynamic value = data[task];
+              if (value == null) {
+                return const DataCell(Center(child: Text("-")));
+              } else if (value.runtimeType == String) {
+                return DataCell(Center(child: Text(value)));
+              } else if (value == true || value == false) {
+                return DataCell(Center(
+                  child: value == true
+                      ? SvgPicture.asset(eSvgAssets.right)
+                      : SvgPicture.asset(eSvgAssets.wrong),
+                ));
+              } else if (value is int) {
+                return DataCell(Center(child: Text(value.toString())));
+              } else {
+                return DataCell(Center(child: Text(data[task].toString())));
+              }
+            }
+          }).toList());
     }).toList();
   }
 
@@ -331,26 +332,26 @@ class MonitoringProvider extends ChangeNotifier {
     return bookDistributionDataList.map((data) {
       return DataRow(
           cells: bookDistributionApiList.map((task) {
-        if (task == '') {
-          dynamic settingPvr =
+            if (task == '') {
+              dynamic settingPvr =
               Provider.of<SettingProvider>(context, listen: true);
-          int isSameUID = settingPvr.shareWithMeList.indexWhere((element) {
-            return element['uid'] == data['uid'];
-          });
+              int isSameUID = settingPvr.shareWithMeList.indexWhere((element) {
+                return element['uid'] == data['uid'];
+              });
 
-          return DataCell(onTap: () {
-            showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) {
-                  return CommonMonitoringDialog(
-                      data: settingPvr.shareWithMeList[isSameUID]);
-                });
-          }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
-        } else {
-          return DataCell(Center(child: Text(data[task].toString())));
-        }
-      }).toList());
+              return DataCell(onTap: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return CommonMonitoringDialog(
+                          data: settingPvr.shareWithMeList[isSameUID]);
+                    });
+              }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
+            } else {
+              return DataCell(Center(child: Text(data[task].toString())));
+            }
+          }).toList());
     }).toList();
   }
 
@@ -368,26 +369,26 @@ class MonitoringProvider extends ChangeNotifier {
     return associationDataList.map((data) {
       return DataRow(
           cells: associationApiList.map((task) {
-        if (task == '') {
-          dynamic settingPvr =
+            if (task == '') {
+              dynamic settingPvr =
               Provider.of<SettingProvider>(context, listen: true);
-          int isSameUID = settingPvr.shareWithMeList.indexWhere((element) {
-            return element['uid'] == data['uid'];
-          });
+              int isSameUID = settingPvr.shareWithMeList.indexWhere((element) {
+                return element['uid'] == data['uid'];
+              });
 
-          return DataCell(onTap: () {
-            showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) {
-                  return CommonMonitoringDialog(
-                      data: settingPvr.shareWithMeList[isSameUID]);
-                });
-          }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
-        } else {
-          return DataCell(Center(child: Text(data[task].toString())));
-        }
-      }).toList());
+              return DataCell(onTap: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return CommonMonitoringDialog(
+                          data: settingPvr.shareWithMeList[isSameUID]);
+                    });
+              }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
+            } else {
+              return DataCell(Center(child: Text(data[task].toString())));
+            }
+          }).toList());
     }).toList();
   }
 
@@ -395,7 +396,7 @@ class MonitoringProvider extends ChangeNotifier {
   worshipData(context, SettingProvider settingPvr) {
     dynamic userWorshipData = worshipDataList
         .where((element) =>
-            element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
+    element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
         .toList();
     return userWorshipData;
   }
@@ -404,7 +405,7 @@ class MonitoringProvider extends ChangeNotifier {
   sleepData(context, SettingProvider settingPvr) {
     dynamic userSleepData = sleepDataList
         .where((element) =>
-            element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
+    element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
         .toList();
     return userSleepData;
   }
@@ -413,7 +414,7 @@ class MonitoringProvider extends ChangeNotifier {
   chantingData(context, SettingProvider settingPvr) {
     dynamic userChantingData = chantingDataList
         .where((element) =>
-            element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
+    element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
         .toList();
     return userChantingData;
   }
@@ -422,7 +423,7 @@ class MonitoringProvider extends ChangeNotifier {
   regulationData(context, SettingProvider settingPvr) {
     dynamic userRegulationData = regulationsDataList
         .where((element) =>
-            element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
+    element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
         .toList();
     return userRegulationData;
   }
@@ -431,7 +432,7 @@ class MonitoringProvider extends ChangeNotifier {
   bookReadData(context, SettingProvider settingPvr) {
     dynamic userBookReadData = bookReadingDataList
         .where((element) =>
-            element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
+    element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
         .toList();
     return userBookReadData;
   }
@@ -440,7 +441,7 @@ class MonitoringProvider extends ChangeNotifier {
   associationData(context, SettingProvider settingPvr) {
     dynamic userAssociationData = associationDataList
         .where((element) =>
-            element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
+    element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
         .toList();
     return userAssociationData;
   }
@@ -449,7 +450,7 @@ class MonitoringProvider extends ChangeNotifier {
   bookDistributionData(context, SettingProvider settingPvr) {
     dynamic userBookDistributionData = bookDistributionDataList
         .where((element) =>
-            element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
+    element['uid'] == settingPvr.shareWithMeList[selectedIndex]['uid'])
         .toList();
     return userBookDistributionData;
   }
@@ -466,26 +467,26 @@ class MonitoringProvider extends ChangeNotifier {
     return chantingDataList.map((data) {
       return DataRow(
           cells: chantingApiList.map((task) {
-        if (task == '') {
-          dynamic settingPvr =
+            if (task == '') {
+              dynamic settingPvr =
               Provider.of<SettingProvider>(context, listen: true);
-          int isSameUID = settingPvr.shareWithMeList.indexWhere((element) {
-            return element['uid'] == data['uid'];
-          });
+              int isSameUID = settingPvr.shareWithMeList.indexWhere((element) {
+                return element['uid'] == data['uid'];
+              });
 
-          return DataCell(onTap: () {
-            showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) {
-                  return CommonMonitoringDialog(
-                      data: settingPvr.shareWithMeList[isSameUID]);
-                });
-          }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
-        } else {
-          return DataCell(Center(child: Text(data[task].toString())));
-        }
-      }).toList());
+              return DataCell(onTap: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return CommonMonitoringDialog(
+                          data: settingPvr.shareWithMeList[isSameUID]);
+                    });
+              }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
+            } else {
+              return DataCell(Center(child: Text(data[task].toString())));
+            }
+          }).toList());
     }).toList();
   }
 
@@ -501,31 +502,31 @@ class MonitoringProvider extends ChangeNotifier {
     return worshipDataList.map((data) {
       return DataRow(
           cells: worshipApiList.map((task) {
-        if (task == '') {
-          dynamic settingPvr =
+            if (task == '') {
+              dynamic settingPvr =
               Provider.of<SettingProvider>(context, listen: true);
-          int isSameUID = settingPvr.shareWithMeList.indexWhere((element) {
-            return element['uid'] == data['uid'];
-          });
-          return DataCell(onTap: () {
-            showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) {
-                  return CommonMonitoringDialog(
-                      data: settingPvr.shareWithMeList[isSameUID]);
-                });
-          }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
-        } else {
-          dynamic value = data[task];
-          return DataCell(Center(
-              child: value.runtimeType == String || value == null
-                  ? Text(value ?? "00:00")
-                  : value == true
+              int isSameUID = settingPvr.shareWithMeList.indexWhere((element) {
+                return element['uid'] == data['uid'];
+              });
+              return DataCell(onTap: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return CommonMonitoringDialog(
+                          data: settingPvr.shareWithMeList[isSameUID]);
+                    });
+              }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
+            } else {
+              dynamic value = data[task];
+              return DataCell(Center(
+                  child: value.runtimeType == String || value == null
+                      ? Text(value ?? "00:00")
+                      : value == true
                       ? SvgPicture.asset(eSvgAssets.right)
                       : SvgPicture.asset(eSvgAssets.wrong)));
-        }
-      }).toList());
+            }
+          }).toList());
     }).toList();
   }
 
@@ -597,23 +598,23 @@ class MonitoringProvider extends ChangeNotifier {
                     DateFormat('HH:mm').parse(sleepTime['wakeup_time']));
               }
               dynamic sandhyaArtiTime =
-                  sadhnaData['data']['sandhya_arti']['time'];
+              sadhnaData['data']['sandhya_arti']['time'];
               bool sandhyaArti =
-                  sadhnaData['data']['sandhya_arti']['sandhya_arti'];
+              sadhnaData['data']['sandhya_arti']['sandhya_arti'];
               bool sNarasimhaArti =
-                  sadhnaData['data']['sandhya_arti']['narasimha_arti'];
+              sadhnaData['data']['sandhya_arti']['narasimha_arti'];
               bool sBhogaOffering =
-                  sadhnaData['data']['sandhya_arti']['bhoga_offering'];
+              sadhnaData['data']['sandhya_arti']['bhoga_offering'];
               dynamic mangalaTime = sadhnaData['data']['mangala_arti']['time'];
               dynamic chanting = sadhnaData['data']['chanting'];
               dynamic association = sadhnaData['data']['association'];
               dynamic bookDistribution =
-                  sadhnaData['data']['book_distribution'];
+              sadhnaData['data']['book_distribution'];
               dynamic notesData = sadhnaData['data']['notes'];
               dynamic bookReadingSummary =
-                  sadhnaData['data']['book_reading_summary'];
+              sadhnaData['data']['book_reading_summary'];
               dynamic totalReadingTime = sadhnaData['data']
-                  ['book_reading_summary']['total_reading_time'];
+              ['book_reading_summary']['total_reading_time'];
               List<String>? timeComponents;
               String? durationString;
               if (sleepTime['duration'] != null) {
@@ -626,7 +627,7 @@ class MonitoringProvider extends ChangeNotifier {
                   durationString = '${duration.inHours}h';
                 } else {
                   durationString =
-                      '${duration.inHours}h ${duration.inMinutes.remainder(60)}m';
+                  '${duration.inHours}h ${duration.inMinutes.remainder(60)}m';
                 }
               }
 
@@ -684,17 +685,17 @@ class MonitoringProvider extends ChangeNotifier {
               }
 
               bool guruAstaka =
-                  sadhnaData['data']['mangala_arti']['guru_astaka'];
+              sadhnaData['data']['mangala_arti']['guru_astaka'];
               bool mNarasimhaArti =
-                  sadhnaData['data']['mangala_arti']['narasimha_arti'];
+              sadhnaData['data']['mangala_arti']['narasimha_arti'];
               bool tulasiArti =
-                  sadhnaData['data']['mangala_arti']['tulasi_arti'];
+              sadhnaData['data']['mangala_arti']['tulasi_arti'];
               bool guruArti = sadhnaData['data']['mangala_arti']['guru_arti'];
               bool mBhogaOffering =
-                  sadhnaData['data']['mangala_arti']['bhoga_offering'];
+              sadhnaData['data']['mangala_arti']['bhoga_offering'];
 
               final settingProvider =
-                  Provider.of<SettingProvider>(context, listen: false);
+              Provider.of<SettingProvider>(context, listen: false);
 
               for (var d in settingProvider.shareWithMeList) {
                 log("message message d $d");
@@ -721,18 +722,18 @@ class MonitoringProvider extends ChangeNotifier {
                     'Before 9:30 pm': chanting['slot_4']['rounds'] ?? "-",
                     'After 9:30 pm': chanting['slot_5']['rounds'] ?? "-",
                     "No Meat Eating": sadhnaData['data']['regulations']
-                            ['no_meat_eating'] ??
+                    ['no_meat_eating'] ??
                         "-",
                     "No Intoxication": sadhnaData['data']['regulations']
-                            ['no_intoxication'] ??
+                    ['no_intoxication'] ??
                         "-",
                     "No Illicit Sex": sadhnaData['data']['regulations']
-                            ['no_illicit_sex'] ??
+                    ['no_illicit_sex'] ??
                         "-",
                     "No Gambling":
-                        sadhnaData['data']['regulations']['no_gambling'] ?? "-",
+                    sadhnaData['data']['regulations']['no_gambling'] ?? "-",
                     "Only Prasadam": sadhnaData['data']['regulations']
-                            ['only_prasadam'] ??
+                    ['only_prasadam'] ??
                         "-",
                     "Gita": bookReadingSummary['bhagavad_gita'] ?? "-",
                     "Bhagavatham": bookReadingSummary['bhagavatham'] ?? "-",
@@ -745,7 +746,7 @@ class MonitoringProvider extends ChangeNotifier {
                     "Preaching": association['preaching'] ?? "-",
                     "Other Activities": association['other_activities'] ?? "-",
                     "Total Association Time":
-                        association['total_association_time'] ?? "-",
+                    association['total_association_time'] ?? "-",
                     "Small Books": bookDistribution['small_books'] ?? 0,
                     "Medium Books": bookDistribution['medium_books'] ?? 0,
                     "Big Books": bookDistribution['big_books'] ?? 0,
@@ -785,7 +786,7 @@ class MonitoringProvider extends ChangeNotifier {
                   "Preaching": association['preaching'] ?? "-",
                   "Other Activities": association['other_activities'] ?? "-",
                   "Total Association Time":
-                      association['total_association_time'] ?? "-"
+                  association['total_association_time'] ?? "-"
                 });
               }
               log('associationDataList 12345 $associationDataList');
@@ -807,18 +808,18 @@ class MonitoringProvider extends ChangeNotifier {
                 regulationsDataList.add({
                   "uid": uid,
                   "No Meat Eating": sadhnaData['data']['regulations']
-                          ['no_meat_eating'] ??
+                  ['no_meat_eating'] ??
                       "-",
                   "No Intoxication": sadhnaData['data']['regulations']
-                          ['no_intoxication'] ??
+                  ['no_intoxication'] ??
                       "-",
                   "No Illicit Sex": sadhnaData['data']['regulations']
-                          ['no_illicit_sex'] ??
+                  ['no_illicit_sex'] ??
                       "-",
                   "No Gambling":
-                      sadhnaData['data']['regulations']['no_gambling'] ?? "-",
+                  sadhnaData['data']['regulations']['no_gambling'] ?? "-",
                   "Only Prasadam":
-                      sadhnaData['data']['regulations']['only_prasadam'] ?? "-"
+                  sadhnaData['data']['regulations']['only_prasadam'] ?? "-"
                 });
               }
             }
@@ -830,7 +831,7 @@ class MonitoringProvider extends ChangeNotifier {
             notifyListeners();
 
             final settingPvr =
-                Provider.of<SettingProvider>(context, listen: false);
+            Provider.of<SettingProvider>(context, listen: false);
 
             allDataList = [];
 
@@ -924,7 +925,7 @@ class MonitoringProvider extends ChangeNotifier {
           isSadhnaDataEmpty = [];
           if (value.data['sadhana'].isNotEmpty) {
             final settingProvider =
-                Provider.of<SettingProvider>(context, listen: false);
+            Provider.of<SettingProvider>(context, listen: false);
 
             for (var sadhnaData in value.data['sadhana']) {
               String uid = sadhnaData['uid'] ?? "";
@@ -952,7 +953,7 @@ class MonitoringProvider extends ChangeNotifier {
                   durationString = '${duration.inHours}h';
                 } else {
                   durationString =
-                      '${duration.inHours}h ${duration.inMinutes.remainder(60)}m';
+                  '${duration.inHours}h ${duration.inMinutes.remainder(60)}m';
                 }
               }
 
@@ -963,37 +964,37 @@ class MonitoringProvider extends ChangeNotifier {
                     .format(DateFormat('HH:mm').parse(mangalaTime));
               }
               dynamic sandhyaArtiTime =
-                  sadhnaData['data']['sandhya_arti']['time'];
+              sadhnaData['data']['sandhya_arti']['time'];
               if (sandhyaArtiTime != null) {
                 sandhyaArtiTime12 = DateFormat('h:mm a')
                     .format(DateFormat('HH:mm').parse(sandhyaArtiTime));
               }
 
               bool guruAstaka =
-                  sadhnaData['data']['mangala_arti']['guru_astaka'];
+              sadhnaData['data']['mangala_arti']['guru_astaka'];
               bool mNarasimhaArti =
-                  sadhnaData['data']['mangala_arti']['narasimha_arti'];
+              sadhnaData['data']['mangala_arti']['narasimha_arti'];
               bool tulasiArti =
-                  sadhnaData['data']['mangala_arti']['tulasi_arti'];
+              sadhnaData['data']['mangala_arti']['tulasi_arti'];
               bool guruArti = sadhnaData['data']['mangala_arti']['guru_arti'];
               bool mBhogaOffering =
-                  sadhnaData['data']['mangala_arti']['bhoga_offering'];
+              sadhnaData['data']['mangala_arti']['bhoga_offering'];
 
               bool sandhyaArti =
-                  sadhnaData['data']['sandhya_arti']['sandhya_arti'];
+              sadhnaData['data']['sandhya_arti']['sandhya_arti'];
               bool sNarasimhaArti =
-                  sadhnaData['data']['sandhya_arti']['narasimha_arti'];
+              sadhnaData['data']['sandhya_arti']['narasimha_arti'];
               bool sBhogaOffering =
-                  sadhnaData['data']['sandhya_arti']['bhoga_offering'];
+              sadhnaData['data']['sandhya_arti']['bhoga_offering'];
               dynamic chanting = sadhnaData['data']['chanting'];
               dynamic association = sadhnaData['data']['association'];
               dynamic bookDistribution =
-                  sadhnaData['data']['book_distribution'];
+              sadhnaData['data']['book_distribution'];
               dynamic notesData = sadhnaData['data']['notes'];
               dynamic bookReadingSummary =
-                  sadhnaData['data']['book_reading_summary'];
+              sadhnaData['data']['book_reading_summary'];
               dynamic totalReadingTime = sadhnaData['data']
-                  ['book_reading_summary']['total_reading_time'];
+              ['book_reading_summary']['total_reading_time'];
               // Populate data in the list for the user with data
               log("sleepTime12sleepTime12 $sleepTime12");
               allDataList.add({
@@ -1018,15 +1019,15 @@ class MonitoringProvider extends ChangeNotifier {
                 'Before 9:30 pm': chanting['slot_4']['rounds'] ?? "-",
                 'After 9:30 pm': chanting['slot_5']['rounds'] ?? "-",
                 "No Meat Eating":
-                    sadhnaData['data']['regulations']['no_meat_eating'] ?? "-",
+                sadhnaData['data']['regulations']['no_meat_eating'] ?? "-",
                 "No Intoxication":
-                    sadhnaData['data']['regulations']['no_intoxication'] ?? "-",
+                sadhnaData['data']['regulations']['no_intoxication'] ?? "-",
                 "No Illicit Sex":
-                    sadhnaData['data']['regulations']['no_illicit_sex'] ?? "-",
+                sadhnaData['data']['regulations']['no_illicit_sex'] ?? "-",
                 "No Gambling":
-                    sadhnaData['data']['regulations']['no_gambling'] ?? "-",
+                sadhnaData['data']['regulations']['no_gambling'] ?? "-",
                 "Only Prasadam":
-                    sadhnaData['data']['regulations']['only_prasadam'] ?? "-",
+                sadhnaData['data']['regulations']['only_prasadam'] ?? "-",
                 "Gita": bookReadingSummary['bhagavad_gita'] ?? "-",
                 "Bhagavatham": bookReadingSummary['bhagavatham'] ?? "-",
                 "CC": bookReadingSummary['caitanya_caritamrita'] ?? "-",
@@ -1038,7 +1039,7 @@ class MonitoringProvider extends ChangeNotifier {
                 "Preaching": association['preaching'] ?? "-",
                 "Other Activities": association['other_activities'] ?? "-",
                 "Total Association Time":
-                    association['total_association_time'] ?? "-",
+                association['total_association_time'] ?? "-",
                 "Small Books": bookDistribution['small_books'] ?? 0,
                 "Medium Books": bookDistribution['medium_books'] ?? 0,
                 "Big Books": bookDistribution['big_books'] ?? 0,
@@ -1104,7 +1105,7 @@ class MonitoringProvider extends ChangeNotifier {
             notifyListeners();
 
             final settingPvr =
-                Provider.of<SettingProvider>(context, listen: false);
+            Provider.of<SettingProvider>(context, listen: false);
 
             allDataList = [];
 
@@ -1238,29 +1239,29 @@ class MonitoringProvider extends ChangeNotifier {
     return regulationsDataList.map((data) {
       return DataRow(
           cells: regulationsApiList.map((task) {
-        if (task == '') {
-          dynamic settingPvr =
+            if (task == '') {
+              dynamic settingPvr =
               Provider.of<SettingProvider>(context, listen: true);
-          int isSameUID = settingPvr.shareWithMeList.indexWhere((element) {
-            return element['uid'] == data['uid'];
-          });
+              int isSameUID = settingPvr.shareWithMeList.indexWhere((element) {
+                return element['uid'] == data['uid'];
+              });
 
-          return DataCell(onTap: () {
-            showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) {
-                  return CommonMonitoringDialog(
-                      data: settingPvr.shareWithMeList[isSameUID]);
-                });
-          }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
-        } else {
-          return DataCell(Center(
-              child: data[task] == true
-                  ? SvgPicture.asset(eSvgAssets.right)
-                  : SvgPicture.asset(eSvgAssets.wrong)));
-        }
-      }).toList());
+              return DataCell(onTap: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return CommonMonitoringDialog(
+                          data: settingPvr.shareWithMeList[isSameUID]);
+                    });
+              }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
+            } else {
+              return DataCell(Center(
+                  child: data[task] == true
+                      ? SvgPicture.asset(eSvgAssets.right)
+                      : SvgPicture.asset(eSvgAssets.wrong)));
+            }
+          }).toList());
     }).toList();
   }
 
@@ -1299,7 +1300,7 @@ class MonitoringProvider extends ChangeNotifier {
   List<DataColumn> notesDataColumn(context) {
     return notesList
         .map((task) => DataColumn(
-            label: Text(language(context, task), textAlign: TextAlign.center)))
+        label: Text(language(context, task), textAlign: TextAlign.center)))
         .toList();
   }
 
@@ -1308,208 +1309,92 @@ class MonitoringProvider extends ChangeNotifier {
     return notesDataList.map((data) {
       return DataRow(
           cells: notesApiList.map((task) {
-        if (task == '') {
-          dynamic settingPvr =
+            if (task == '') {
+              dynamic settingPvr =
               Provider.of<SettingProvider>(context, listen: true);
-          int isSameUID = settingPvr.shareWithMeList.indexWhere((element) {
-            return element['uid'] == data['uid'];
-          });
-          return DataCell(onTap: () {
-            showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) {
-                  return CommonMonitoringDialog(
-                      data: settingPvr.shareWithMeList[isSameUID]);
-                });
-          }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
-        } else {
-          return DataCell(SizedBox(
-              width: MediaQuery.of(context).size.width * 0.5,
-              child: Text(data[task])));
-        }
-      }).toList());
+              int isSameUID = settingPvr.shareWithMeList.indexWhere((element) {
+                return element['uid'] == data['uid'];
+              });
+              return DataCell(onTap: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return CommonMonitoringDialog(
+                          data: settingPvr.shareWithMeList[isSameUID]);
+                    });
+              }, const SizedBox(width: Sizes.s40, height: Sizes.s40));
+            } else {
+              return DataCell(SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: Text(data[task])));
+            }
+          }).toList());
     }).toList();
   }
 
   // int selectedTabIndex = 0;
   ScrollController scrollController = ScrollController();
 
-  List<List<int>> calculateUserToDoRanges(double screenWidth) {
-    if (screenWidth <= 320) {
-      return [
-        [0],
-        [48],
-        [220],
-        [325],
-        [415],
-        [470],
-        [567],
-        [600]
-      ];
-    } else if (screenWidth <= 323) {
-      return [
-        [0], //sleep
-        [48], //worship
-        [220], //association
-        [325], //regulations
-        [413], //books
-        [467], //chanting
-        [565], //book distribution
-        [600] //notes
-      ];
-    } else if (screenWidth <= 324) {
-      return [
-        [0], //sleep
-        [48], //worship
-        [220], //association
-        [325], //regulations
-        [410], //books
-        [465], //chanting
-        [565], //book distribution
-        [600] //notes
-      ];
-    } else if (screenWidth <= 326) {
-      return [
-        [0], //sleep
-        [46], //worship
-        [218], //association
-        [323], //regulations
-        [410], //books
-        [463], //chanting
-        [562], //book distribution
-        [600] //notes
-      ];
-    } else if (screenWidth <= 328) {
-      return [
-        [0], //sleep
-        [46], //worship
-        [218], //association
-        [320], //regulations
-        [408], //books
-        [460], //chanting
-        [559], //book distribution
-        [600] //notes
-      ];
-    } else if (screenWidth <= 330) {
-      return [
-        [0], //sleep
-        [46], //worship
-        [216], //association
-        [320], //regulations
-        [406], //books
-        [458], //chanting
-        [557], //book distribution
-        [600] //notes
-      ];
-    } else if (screenWidth <= 332) {
-      return [
-        [0], //sleep
-        [45], //worship
-        [215], //association
-        [316], //regulations
-        [404], //books
-        [456], //chanting
-        [553], //book distribution
-        [600] //notes
-      ];
-    } else if (screenWidth <= 335) {
-      return [
-        [0], //sleep
-        [44], //worship
-        [213], //association
-        [314], //regulations
-        [401], //books
-        [453], //chanting
-        [550], //book distribution
-        [600] //notes
-      ];
-    } else if (screenWidth <= 360) {
-      //done
-      return [
-        [0],
-        [45],
-        [205],
-        [300],
-        [380],
-        [430],
-        [520],
-        [550]
-      ];
-    } else if (screenWidth <= 400) {
-      //done
-      return [
-        [0],
-        [42],
-        [190],
-        [280],
-        [358],
-        [405],
-        [490],
-        [510]
-      ];
-    } else if (screenWidth <= 420) {
-      //done
-      return [
-        [0],
-        [40],
-        [185],
-        [270],
-        [345],
-        [391],
-        [475],
-        [500]
-      ];
-    } else if (screenWidth <= 450) {
-      //done
-      return [
-        [0],
-        [40],
-        [180],
-        [265],
-        [335],
-        [382],
-        [465],
-        [500]
-      ];
-    } else {
-      //done tab
-      return [
-        [0],
-        [30],
-        [140],
-        [205],
-        [260],
-        [295],
-        [465],
-        [500]
-      ];
-    }
+  List<List<int>> calculateUserToDoRanges() {
+    return [
+      [0], // sleep
+      [4], // worship
+      [14], // association
+      [20], // regulations
+      [25], // books
+      [30], // chanting
+      [36], // book distribution
+      [39], // notes
+    ];
   }
 
-  void scrollToRange(int startIndex, context, index) {
+  void scrollToRange(int startIndex, BuildContext context, int index, List<double> columnWidths) {
     isSelected = index;
     notifyListeners();
-    double screenWidth = MediaQuery.of(context).size.width + 5;
-    if (index == 1) {
-      screenWidth = MediaQuery.of(context).size.width - 10;
-    } else if (index == 2) {
-      screenWidth = MediaQuery.of(context).size.width - 8;
-    } else if (index == 3) {
-      screenWidth = MediaQuery.of(context).size.width - 8;
-    } else if (index == 4) {
-      screenWidth = MediaQuery.of(context).size.width - 5;
-    } else if (index == 5) {
-      screenWidth = MediaQuery.of(context).size.width - 11;
-    } else if (index == 6) {
-      screenWidth = MediaQuery.of(context).size.width - 1;
+
+    // Define the width of each item (adjust this value as needed).
+    // const double itemWidth = 100.0; // Example fixed width per item.
+    double offset = 24.0;
+    for(int i=0;i<startIndex;i++){
+      offset += (columnWidths[i] + 24.0);
+      // print("col width = ${columnWidths[i]}");
+      // print(offset);
+      print(i);
     }
+    // Calculate the scroll position.
+    double scrollPosition = offset;
+    // double scrollPosition = startIndex * 150;
+    print(scrollPosition);
 
-    final double columnWidth = screenWidth / allList.length;
-    // final double columnWidth = screenWidth / allList.length;
-    double scrollPosition = startIndex * columnWidth;
-
-    scrollController.animateTo(scrollPosition,
-        duration: const Duration(milliseconds: 100), curve: Curves.easeInOut);
+    scrollController.animateTo(
+      scrollPosition,
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.easeInOut,
+    );
   }
+
+  List<double> getColumnWidths(List<DataColumn> columns) {
+    final List<double> columnWidths = [];
+
+    for (var column in columns) {
+      // print((column.label as Text).data ?? '');
+      final textPainter = TextPainter(
+        text: TextSpan(text: (column.label as Text).data ?? '', style: appCss.dmDenseSemiBold16),
+        textDirection: wd.TextDirection.ltr,
+      )..layout();
+      // print("width ${textPainter.width}");
+
+      // Track the max width of the column
+      // maxWidth = textPainter.width == 0.0 ? maxWidth : 0.0;
+
+      // Convert the width to an integer and store it in the result list
+      columnWidths.add(textPainter.width);
+    }
+    // print(columnWidths);
+
+    return columnWidths;
+  }
+
+
 }
